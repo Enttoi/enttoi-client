@@ -3,7 +3,7 @@ import time
 import requests
 import random
  
-end_point = "http://enttoigw.azurewebsites.net/status"
+end_point = "http://enttoigw.azurewebsites.net/sensor"
 client_token = "e997b810-f0ae-4cde-b933-e2ed6430d2d1"
 doors = [sensors.Sensor(1, 23, "cabin_door"), sensors.Sensor(2, 26, "cabin_door")]
  
@@ -13,11 +13,11 @@ while True:
 		d.last_state = 1 if random.random() > 0.9 else 0
 		
 		# send state
-		payload = {"room": client_token, "door": d.identity, "state": d.last_state}
+		payload = {"client": client_token, "sensor_type": d.sensor_type, "sensor_id": d.identity, "state": d.last_state}
 				
 		print("Payload:\t{0}".format(str(payload)))	
 		try:
-			r = requests.post(end_point, data=payload)
+			r = requests.post(end_point, json=payload)
 			print("Response:\t{0} {1}".format(r.status_code, r.text))			
 			r.close()
 		except requests.exceptions.ConnectionError as e:
@@ -27,7 +27,7 @@ while True:
 		except requests.exceptions.ReadTimeout as e:
 			print("Error:\ttimeout while getting response")
 		except requests.exceptions.HTTPError as e:
-			print("Error:\{0}".format(e.message))	
+			print("Error:\t{0}".format(e.message))	
 		
 		print("")	
 		
