@@ -13,7 +13,7 @@ while True:
 		d.last_state = 1 if random.random() > 0.9 else 0
 		
 		# send state
-		payload = {"token": client_token, "sensor_type": d.sensor_type, "sensor_id": d.identity, "state": d.last_state}
+		payload = {"token": client_token, "sensorType": d.sensor_type, "sensorId": d.identity, "state": d.last_state}
 				
 		print("Payload:\t{0}".format(str(payload)))	
 		try:
