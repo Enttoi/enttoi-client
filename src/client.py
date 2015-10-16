@@ -3,8 +3,8 @@ import time
 import requests
 import random
  
-end_point = "http://enttoigw.azurewebsites.net/sensor"
-client_token = "e997b810-f0ae-4cde-b933-e2ed6430d2d1"
+end_point = ""
+client_token = ""
 doors = [sensors.Sensor(1, 23, "cabin_door"), sensors.Sensor(2, 26, "cabin_door")]
  
 while True:
