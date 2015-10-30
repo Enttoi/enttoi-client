@@ -1,12 +1,11 @@
-﻿import abc
+﻿import threading, time
+import abc
 import RPi.GPIO as GPIO
 
 class Led(object):
 	
-	def __init__(self, identity, pin, color):
-		self.identity = identity
+	def __init__(self, pin):
 		self.pin = pin
-		self.color = color
 		GPIO.setup(self.pin, GPIO.OUT)
 		self.off() # reset state
 
@@ -15,3 +14,4 @@ class Led(object):
 
 	def off(self):
 		GPIO.output(self.pin,False)
+
