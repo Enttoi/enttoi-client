@@ -2,15 +2,19 @@
 import leds
 import time
 import RPi.GPIO as GPIO
+import os
  
-end_point = ""
-client_token = ""
+end_point = os.environ["ENTTOI_ENDPOINT"]
+client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
+
 GPIO.setmode(GPIO.BCM)
 
-doors = [sensors.Sensor(1, 23, "cabin_door"), sensors.Sensor(2, 26, "cabin_door")]
-red_indicator = leds.Led(4)
-green_indicator = leds.Led(17)
-yellow_indicator = leds.Led(18)
+# wPi = 2, 3
+doors = [sensors.Sensor(1, 27, "cabin_door"), sensors.Sensor(2, 22, "cabin_door")]
+
+green_indicator = leds.Led(17) # wPi = 0
+yellow_indicator = leds.Led(18) # wPi = 1
+red_indicator = leds.Led(4) # wPi = 7
 indicators = [red_indicator, green_indicator, yellow_indicator]
  
 # indicates boot of the client
