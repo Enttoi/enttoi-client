@@ -1,7 +1,5 @@
 # Enttoi Raspberry Pi client
 
->This repository is part of [Enttoi](http://enttoi.github.io/) project
-
 This is a client application that runs on RPi and streams sensors data to [gateway](https://github.com/Enttoi/enttoi-gateway).
 
 ## Dependencies
