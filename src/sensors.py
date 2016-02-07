@@ -31,12 +31,12 @@ class Sensor(object):
 		log_message = "Sending {0}:\t".format(str({"pin": self.__pin, "state": self.__last_state}))
 		
 		try:
-			r = requests.post(end_point, json=payload)
+			r = requests.post(end_point, json=payload, timeout=1) # timeout after 1 second
 			log_message += "{0} {1}".format(r.status_code, r.text)
 			r.close()
 			success = (r.status_code == 200)
 		except requests.exceptions.ConnectionError as e:
-			log_message += "connection error"
+			log_message += "connection error/timeout waiting for response"
 		except requests.exceptions.ConnectTimeout as e:
 			log_message += "timeout while connecting"
 		except requests.exceptions.ReadTimeout as e:
