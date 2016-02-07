@@ -9,24 +9,24 @@ client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
 
 GPIO.setmode(GPIO.BCM)
 
-# wPi = 2, 3
-doors = [sensors.Sensor(1, 27, "cabin_door"), sensors.Sensor(2, 22, "cabin_door")]
+# wPi = 4
+doors = [sensors.Sensor(1, 23, "cabin_door")]
 
-green_indicator = leds.Led(4) # wPi = 7
-indicators = [green_indicator]
- 
-# indicates boot of the client
-def boot():
-	for i in indicators:
-		i.on()
+# wPi = 0
+green_indicator = leds.Led(17) 
 
 # loops forever on each sensor and sends their state
 def start_sending():
-	while True:
-		for d in doors:
-			success = d.send_state(client_token, end_point)	
-            		
-		time.sleep(0.5)
+	green_indicator.on()
+	try:
+		while True:
+			for d in doors:
+				state_changed = d.read_state()
+				# meantime send anyway (even if state didn't change)
+				success = d.send_state(client_token, end_point)
+			time.sleep(0.5)
+	except KeyboardInterrupt:
+		green_indicator.off()
+		pass
 
-boot()
 start_sending()
