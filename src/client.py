@@ -12,7 +12,7 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 # wPi = 4
-doors = [sensors.Sensor(1, 23, "cabin_door")]
+doors = [sensors.Sensor(1, 23, "cabin_door"), sensors.Sensor(2, 24, "cabin_door")]
 
 # wPi = 0
 power_indicator = leds.Led(17) 
