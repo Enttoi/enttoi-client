@@ -38,7 +38,7 @@ def read_send(door, stop_event):
 				# force sending current (recently changed) state on next iteration
 				last_request = now - throttling_factor
 				
-		stop_event.wait(0.5)	
+		stop_event.wait(0.2)	
 
 # spins up thread for each sensor and await interraption 
 def start():
