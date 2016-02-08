@@ -17,9 +17,10 @@ class Sensor(object):
 	def read_state(self):
 		new_state = 1 if GPIO.input(self.__pin) == False else 0
 		if self.__last_state != new_state:
-			print("State changed for pin [{0}] from {1} to {2}".format(self.__pin, self.__last_state, new_state))
 			self.__last_state = new_state
 			self.__state_changed_on = datetime.datetime.utcnow()
+			print("{0} State changed for pin [{1}] from {2} to {3}".format(
+				self.__state_changed_on.strftime("%H:%M:%S"), self.__pin, self.__last_state, new_state))
 			return True
 		else:
 			return False
@@ -28,10 +29,11 @@ class Sensor(object):
 	def send_state(self, client_token, end_point):
 		success = False
 		payload = {"token": client_token, "sensorType": self.__sensor_type, "sensorId": self.identity, "state": self.__last_state}		
-		log_message = "Sending {0}:\t".format(str({"pin": self.__pin, "state": self.__last_state}))
+		log_message = "{0} Sending {1}:\t".format(
+			datetime.datetime.utcnow().strftime("%H:%M:%S"), str({"pin": self.__pin, "state": self.__last_state}))
 		
 		try:
-			r = requests.post(end_point, json=payload, timeout=1) # timeout after 1 second
+			r = requests.post(end_point, json=payload, timeout=0.5) # timeout after 1 second
 			log_message += "{0} {1}".format(r.status_code, r.text)
 			r.close()
 			success = (r.status_code == 200)
