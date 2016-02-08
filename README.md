@@ -2,6 +2,8 @@
 
 This is a client application that runs on RPi and streams sensors data to [gateway](https://github.com/Enttoi/enttoi-gateway).
 
+The client will read each sensor's state every `X` ms. After reading, it will report on each change of state immediately or at least once every `Y` seconds (even if the state wasn't changed) to the gateway. This will provide an efficient way of getting real-time state of sensors and track of online/offline clients (due to network or other issues). For each sensor a separated thread is spinned, so the IO operations won't block reporting of different sensors.
+
 ## Dependencies
 
 1. [RPi.GPIO](https://pypi.python.org/pypi/RPi.GPIO) 
