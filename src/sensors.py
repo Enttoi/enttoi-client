@@ -33,7 +33,7 @@ class Sensor(object):
 			datetime.datetime.utcnow().strftime("%H:%M:%S"), str({"pin": self.__pin, "state": self.__last_state}))
 		
 		try:
-			r = requests.post(end_point, json=payload, timeout=0.5) # timeout after 1 second
+			r = requests.post(end_point, json=payload, timeout=1) # timeout after 1 second
 			log_message += "{0} {1}".format(r.status_code, r.text)
 			r.close()
 			success = (r.status_code == 200)
