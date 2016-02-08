@@ -42,6 +42,8 @@ def read_send(door, stop_event):
 
 # spins up thread for each sensor and await interraption 
 def start():
+	print("Starting with endpoint [{0}], hit 'Enter' to exit...\n".format(end_point))	
+	
 	t_stop = threading.Event()	
 	threads = []
 	
@@ -53,7 +55,7 @@ def start():
 		
 	try:
 		# block main thread
-		raw_input("Started, hit 'Enter' to exit...")	
+		raw_input("")	
 	except KeyboardInterrupt:
 		pass
 		
