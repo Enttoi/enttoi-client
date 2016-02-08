@@ -37,4 +37,8 @@ Start client:
 sudo python clint.py
 ```
 
+## Sensors configuration
 
+The current setup is:
+* One [LED](http://www.aliexpress.com/item//32377761083.html) connected to wPi=0 or BCM=17 pin. This LED turned on once the client lunched
+* 2 [reed switches](http://www.aliexpress.com/item//32424305003.html) connected to wPi=5,7 or BCM=4,24. 

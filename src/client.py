@@ -11,8 +11,8 @@ client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-# wPi = 4
-doors = [sensors.Sensor(1, 23, "cabin_door"), sensors.Sensor(2, 24, "cabin_door")]
+# wPi = 7, 5
+doors = [sensors.Sensor(1, 4, "cabin_door"), sensors.Sensor(2, 24, "cabin_door")]
 
 # wPi = 0
 power_indicator = leds.Led(17) 
@@ -20,7 +20,7 @@ power_indicator = leds.Led(17)
 # loops forever single sensor and reports its state
 def read_send(door, stop_event):	
 	while (not stop_event.is_set()):
-		state_changed = door.read_state()
+		is_state_changed = door.read_state()
 		# meantime send anyway (even if state didn't change)
 		success = door.send_state(client_token, end_point)
 		stop_event.wait(0.5)	
