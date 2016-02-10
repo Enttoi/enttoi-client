@@ -3,7 +3,10 @@ import datetime, os, sys, threading
 import RPi.GPIO as GPIO
 
 # loops forever single sensor and reports its state
-def read_send(door, throttling_factor, frequency, end_point, client_token, stop_event):	
+def read_send(door, send_frequency, read_frequency, end_point, client_token, stop_event):
+	# send updates no more than once in X seconds
+	throttling_factor = datetime.timedelta(0, send_frequency) 
+	
 	# when the last successful update was sent
 	last_request = datetime.datetime.utcnow() - throttling_factor
 	
@@ -19,7 +22,7 @@ def read_send(door, throttling_factor, frequency, end_point, client_token, stop_
 				# force sending current (recently changed) state on next iteration
 				last_request = now - throttling_factor
 				
-		stop_event.wait(frequency)	
+		stop_event.wait(read_frequency)	
 
 # spins up thread for each sensor and await interraption 
 def main(argv):
@@ -34,9 +37,6 @@ def main(argv):
 	
 	# wPi = 0
 	power_indicator = leds.Led(17) 
-	
-	# send updates no more than once in X seconds
-	throttling_factor = datetime.timedelta(0, 30) 
 
 	print("Starting with endpoint [{0}], hit 'Enter' to exit...\n".format(end_point))	
 	power_indicator.on()
@@ -46,7 +46,7 @@ def main(argv):
 	
 	for door in doors:
 		t = threading.Thread(target=read_send, args = (
-			door, throttling_factor, 0.2, end_point, client_token, stop_event))
+			door, 30, 0.2, end_point, client_token, stop_event))
 		t.daemon = True
 		t.start()
 		threads.append(t)
