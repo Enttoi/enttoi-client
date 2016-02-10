@@ -44,7 +44,7 @@ def process_sensor(door, end_point, client_token, stop_event):
 		now = datetime.datetime.utcnow()
 		
 		if (is_state_changed == True or last_request < (now - throttling_factor)):
-			success = post_to_api(end_point, client_token, door.serialize_state(client_token))
+			success = post_to_api(end_point, client_token, door.serialize_state())
 			if(success == True):
 				last_request = now
 			else:

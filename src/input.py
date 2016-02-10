@@ -25,12 +25,8 @@ class Sensor(object):
 			return False
 	
 	# serialize object for sending over the wire
-	def serialize_state(self, client_token):
-		if not client_token:
-			raise ValueError('Client token is required', client_token)
-			
+	def serialize_state(self):			
 		return {
-			"token": client_token, 
 			"sensorType": self.__sensor_type, 
 			"sensorId": self.identity, 
 			"state": self.__last_state}
