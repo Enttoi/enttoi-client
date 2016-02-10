@@ -13,7 +13,7 @@ def post_to_api(end_point, client_token, payload):
 			datetime.datetime.utcnow().strftime("%H:%M:%S"), str(payload))
 		
 		try:
-			r = requests.post(end_point, headers = {'Authorize': client_token}, json = payload, timeout = CONST_API_TIMEOUT)
+			r = requests.post(end_point, headers = {'Authorization': client_token}, json = payload, timeout = CONST_API_TIMEOUT)
 			log_message += "{0} {1}".format(r.status_code, r.text)
 			r.close()
 			success = (r.status_code == 200)
