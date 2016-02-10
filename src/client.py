@@ -1,30 +1,11 @@
-﻿import sensors
-import leds
-import datetime
+import sensors, leds
+import datetime, os, sys, threading
 import RPi.GPIO as GPIO
-import os
-import threading
- 
-end_point = os.environ["ENTTOI_ENDPOINT"]
-client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-
-# wPi = 7, 5
-doors = [sensors.Sensor(1, 4, "cabin_door"), sensors.Sensor(2, 24, "cabin_door")]
-
-# wPi = 0
-power_indicator = leds.Led(17) 
-
-# send updates no more than once in X seconds
-throttling_factor = datetime.timedelta(0, 30) 
 
 # loops forever single sensor and reports its state
-def read_send(door, stop_event):	
-	
+def read_send(door, throttling_factor, frequency, end_point, client_token, stop_event):	
 	# when the last successful update was sent
-	last_request = datetime.datetime(1979, 1, 1, 0, 0, 0, 0) 
+	last_request = datetime.datetime.utcnow() - throttling_factor
 	
 	while (not stop_event.is_set()):
 		is_state_changed = door.read_state()
@@ -38,17 +19,34 @@ def read_send(door, stop_event):
 				# force sending current (recently changed) state on next iteration
 				last_request = now - throttling_factor
 				
-		stop_event.wait(0.2)	
+		stop_event.wait(frequency)	
 
 # spins up thread for each sensor and await interraption 
-def start():
-	print("Starting with endpoint [{0}], hit 'Enter' to exit...\n".format(end_point))	
+def main(argv):
+	end_point = os.environ["ENTTOI_ENDPOINT"]
+	client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
 	
-	t_stop = threading.Event()	
+	GPIO.setwarnings(False)
+	GPIO.setmode(GPIO.BCM)
+	
+	# wPi = 7, 5
+	doors = [sensors.Sensor(1, 4, "cabin_door"), sensors.Sensor(2, 24, "cabin_door")]
+	
+	# wPi = 0
+	power_indicator = leds.Led(17) 
+	
+	# send updates no more than once in X seconds
+	throttling_factor = datetime.timedelta(0, 30) 
+
+	print("Starting with endpoint [{0}], hit 'Enter' to exit...\n".format(end_point))	
+	power_indicator.on()
+	
+	stop_event = threading.Event()	
 	threads = []
 	
-	for d in doors:
-		t = threading.Thread(target=read_send, args = (d, t_stop))
+	for door in doors:
+		t = threading.Thread(target=read_send, args = (
+			door, throttling_factor, 0.2, end_point, client_token, stop_event))
 		t.daemon = True
 		t.start()
 		threads.append(t)
@@ -61,13 +59,13 @@ def start():
 		
 	print("Exiting...")	
 	# signal to all threads to stop working
-	t_stop.set()
+	stop_event.set()
 	
 	# wait all threads to finish
 	for t in threads:
 		t.join()
 		
-power_indicator.on()
-start()
-power_indicator.off()
-		
+	power_indicator.off()
+
+if __name__ == "__main__":
+   main(sys.argv[1:])		
