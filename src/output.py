@@ -1,5 +1,4 @@
-﻿import threading, time
-import abc
+﻿import abc
 import RPi.GPIO as GPIO
 
 class Led(object):

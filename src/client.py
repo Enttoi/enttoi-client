@@ -1,7 +1,6 @@
-import input.Sensor as Sensor
-import output.Led as Led
+import input, output
 import RPi.GPIO as GPIO
-import datetime, os, sys, threading
+import datetime, os, sys, threading, requests
 
 CONST_API_TIMEOUT = 3 # after X seconds to timout when calling API
 CONST_API_INVOKE_LIMIT = 30 # send updates no more than once in X seconds
@@ -62,8 +61,8 @@ def main(argv):
 	if os.environ.has_key("ENTTOI_ENDPOINT"):
 		end_point = os.environ["ENTTOI_ENDPOINT"]
 	
-	if os.environ.has_key("ENTTOI_ENDPOINT"):
-		client_token = os.environ["ENTTOI_ENDPOINT"]
+	if os.environ.has_key("ENTTOI_CLIENT_TOKEN"):
+		client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
 		
 	if not end_point or not client_token:
 		print("Endpoint or/and client token not specified")
@@ -76,7 +75,7 @@ def main(argv):
 	doors = [input.Sensor(1, 4, "cabin_door"), input.Sensor(2, 24, "cabin_door")]
 	
 	# wPi = 0
-	power_indicator = Led(17) 
+	power_indicator = output.Led(17) 
 
 	print("Starting with endpoint [{0}], hit 'Enter' to exit...\n".format(end_point))	
 	power_indicator.on()
