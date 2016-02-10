@@ -11,7 +11,7 @@ For each sensor a separated thread is spinned, so the IO operations won't block 
 1. [RPi.GPIO](https://pypi.python.org/pypi/RPi.GPIO) 
 2. [Requests](http://www.python-requests.org/en/latest/). 
 
-## Deploy 
+## Deploy lower env
 
 Setup environment variables:
 ```bash
@@ -30,8 +30,7 @@ sudo visudo
 ```
 then add:
 ```bash
-Defaults	env_keep +="ENTTOI_ENDPOINT"
-Defaults	env_keep +="ENTTOI_CLIENT_TOKEN"
+Defaults	env_keep +="ENTTOI_ENDPOINT ENTTOI_CLIENT_TOKEN"
 ```
 
 Deploy the ```/src``` folder into Raspberry Pi. 
