@@ -40,7 +40,7 @@ class Client(object):
 		self.__threads = []
 		
 		for door in self.__doors:
-			thread = threading.Thread(target=__process_sensor, args = (door))
+			thread = threading.Thread(target=self.__process_sensor, args = (door,))
 			thread.daemon = True
 			thread.start()
 			self.__threads.append(thread)
@@ -74,7 +74,7 @@ class Client(object):
 			now = datetime.datetime.utcnow()
 			
 			if (is_state_changed or last_request < (now - self.__throttling_factor)):
-				success = __post_to_api(door.serialize_state())
+				success = self.__post_to_api(door.serialize_state())
 				if(success):
 					last_request = now
 				else:
