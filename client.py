@@ -33,7 +33,7 @@ class Client(object):
 		
 	# starts client - spins up thread for each sensor and sends data to API 
 	def start(self):
-		print("Starting client with endpoint [{0}]".format(end_point))	
+		print("Starting client with endpoint [{0}]".format(self.__end_point))	
 		self.__power_indicator.on()		
 		
 		self.__stop_event = threading.Event()	
