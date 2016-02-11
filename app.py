@@ -1,3 +1,5 @@
+"""Main entry point to application when running client from shell"""
+
 import os, sys, client
 
 def main(argv):

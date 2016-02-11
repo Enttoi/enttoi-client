@@ -1,4 +1,5 @@
-﻿import abc
+﻿"""Wrappers for OUTPUT devices connected to GPIO"""
+import abc
 import RPi.GPIO as GPIO
 
 class Led(object):

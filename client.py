@@ -1,3 +1,11 @@
+"""
+Singleton for performing all workload of the client
+Is initiated from environment - either app.py which executed 
+from shell or from daemon service. Once an instance created,
+stop() method needs to be called to start the actual monitoring
+and then later on stop() to halt.
+"""
+
 import input, output
 import RPi.GPIO as GPIO
 import datetime, threading, requests
@@ -74,7 +82,7 @@ class Client(object):
 			now = datetime.datetime.utcnow()
 			
 			if (is_state_changed or last_request < (now - self.__throttling_factor)):
-				success = self.__post_to_api(door.serialize_state())
+				success = self.__post_to_gateway(door.serialize_state())
 				if(success):
 					last_request = now
 				else:
@@ -83,8 +91,8 @@ class Client(object):
 					
 			self.__stop_event.wait(CONST_SENSOR_READ_FREQUENCY)	
 		
-	# sends data to api and returns success status
-	def __post_to_api(self, payload):
+	# sends data to gateway and returns success status
+	def __post_to_gateway(self, payload):
 			success = False
 			log_message = "{0} Sending {1}:\t".format(
 				datetime.datetime.utcnow().strftime("%H:%M:%S"), str(payload))

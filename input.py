@@ -1,4 +1,5 @@
-﻿import abc
+﻿"""Wrappers for INPUT devices connected to GPIO"""
+import abc
 import datetime
 import RPi.GPIO as GPIO
 

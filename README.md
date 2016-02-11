@@ -33,12 +33,17 @@ then add:
 Defaults	env_keep +="ENTTOI_ENDPOINT ENTTOI_CLIENT_TOKEN"
 ```
 
-## Running
+## Running as shell application
 
 Deploy the `/` folder into Raspberry Pi and start client from terminal:
 ```bash
 sudo python app.py
 ```
+
+## Running as daemon service
+
+Init script `service.sh` makes the necessary plumbing  for executing client through `service.py` as daemon. 
+> It will perform `git pull` before starting
 
 ## Sensors setup
 
