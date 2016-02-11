@@ -14,17 +14,17 @@ def main(argv):
 		print("Endpoint or/and client token not specified")
 		sys.exit(1)
 		
-	client = client.Client(end_point, client_token)
+	c = client.Client(end_point, client_token)
 	print("Hit 'Enter' or 'Ctr+C' to exit...\n")
 	
-	client.start()
+	c.start()
 	try:
 		# block main thread
 		raw_input("")	
 	except KeyboardInterrupt:
 		pass
 		
-	client.stop()
+	c.stop()
 	
 if __name__ == "__main__":
 	main(sys.argv[1:])
