@@ -6,7 +6,7 @@
 			"type": "python",
 			"request": "launch",
 			"stopOnEntry": true,
-			"program": "src/client.py"
+			"program": "app.py"
 		}
 	]
 }

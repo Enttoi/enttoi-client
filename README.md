@@ -33,11 +33,11 @@ then add:
 Defaults	env_keep +="ENTTOI_ENDPOINT ENTTOI_CLIENT_TOKEN"
 ```
 
-Deploy the ```/src``` folder into Raspberry Pi. 
+Deploy the `/` folder into Raspberry Pi. 
 
 Start client:
 ```bash
-sudo python client.py
+sudo python app.py
 ```
 
 ## Sensors configuration
