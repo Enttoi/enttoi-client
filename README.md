@@ -11,9 +11,9 @@ For each sensor a separated thread is spinned, so the IO operations won't block 
 1. [RPi.GPIO](https://pypi.python.org/pypi/RPi.GPIO) 
 2. [Requests](http://www.python-requests.org/en/latest/). 
 
-## Deploy lower env
+## Configurations
 
-Setup environment variables:
+The only prerequisite is to have environment variables which defines the endpoint of API and a security token. Those can be defined either simplier in `/etc/environment` or for the user:
 ```bash
 export ENTTOI_ENDPOINT=[gateway endpoint URI]
 export ENTTOI_CLIENT_TOKEN=[client's token]
@@ -33,14 +33,14 @@ then add:
 Defaults	env_keep +="ENTTOI_ENDPOINT ENTTOI_CLIENT_TOKEN"
 ```
 
-Deploy the `/` folder into Raspberry Pi. 
+## Running
 
-Start client:
+Deploy the `/` folder into Raspberry Pi and start client from terminal:
 ```bash
 sudo python app.py
 ```
 
-## Sensors configuration
+## Sensors setup
 
 The current setup is:
 * One [LED](http://www.aliexpress.com/item//32377761083.html) connected to wPi=0 or BCM=17 pin. This LED turned on once the client launched and turned off when terminated
