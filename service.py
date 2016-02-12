@@ -1,21 +1,17 @@
 #!/usr/bin/env python
 """Main entry point to application when running client from daemon"""
 
-import logging, logging.handlers, argparse, sys, signal
+import logging
+import logging.handlers
+import sys
+import signal
+import time
+import os
 import client
 
 # Deafults
 LOG_FILENAME = "/tmp/entoi-client.log"
 LOG_LEVEL = logging.INFO  # Could be e.g. "DEBUG" or "WARNING"
-
-# Define and parse command line arguments
-parser = argparse.ArgumentParser(description="Enttoi client service")
-parser.add_argument("-l", "--log", help="file to write log to (default '" + LOG_FILENAME + "')")
-
-# If the log file is specified on the command line then override the default
-args = parser.parse_args()
-if args.log:
-	LOG_FILENAME = args.log
 
 # Configure logging to log to a file, making a new file at midnight and keeping the last 3 day's data
 logger = logging.getLogger(__name__)

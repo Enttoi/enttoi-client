@@ -42,8 +42,34 @@ sudo python app.py
 
 ## Running as daemon service
 
-Init script `service.sh` makes the necessary plumbing  for executing client through `service.py` as daemon. 
-> It will perform `git pull` before starting
+>The client daemonized using [Stephen's](http://blog.scphillips.com/posts/2013/07/getting-a-python-script-to-run-in-the-background-as-a-service-on-boot/) fairly painless trick. 
+
+Assuming that the project cloned into `/home/pi/enttoi-client` (this can me changed in `enttoi.sh`), copy init script to `/etc/init.d`:
+
+```bash
+sudo cp enttoi.sh /etc/init.d
+```
+
+Make sure that both `enttoi.sh` and `service.py` are executable:
+
+```bash
+sudo chmod 755 /etc/init.d/enttoi.sh
+chmod 755 service.py
+```
+
+At this stage you can start and stop service:
+```bash
+sudo /etc/init.d/enttoi.sh start
+sudo /etc/init.d/enttoi.sh status
+sudo /etc/init.d/enttoi.sh stop
+```
+
+See log file at `/tmp/entoi-client.log` for info or errors.
+
+Now, add it to boot sequence:
+```bash
+sudo update-rc.d enttoi.sh defaults
+```
 
 ## Sensors setup
 
