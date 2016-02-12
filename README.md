@@ -6,14 +6,15 @@ The client will read each sensor's state every `X` ms. After reading, it will re
 
 For each sensor a separated thread is spinned, so the IO operations won't block reporting of different sensors.
 
-## Dependencies
-
-1. [RPi.GPIO](https://pypi.python.org/pypi/RPi.GPIO) 
-2. [Requests](http://www.python-requests.org/en/latest/). 
-
 ## Configurations
 
-The only prerequisite is to have environment variables which defines the endpoint of API and a security token. Those can be defined either simplier in `/etc/environment` or for the user:
+The only prerequisite is to have environment variables which defines the endpoint of API and a security token. Those can be defined either simply in `/etc/environment`:
+```bash
+ENTTOI_ENDPOINT="[gateway endpoint URI]"
+ENTTOI_CLIENT_TOKEN="[client's token]"
+```
+
+ or for the user:
 ```bash
 export ENTTOI_ENDPOINT=[gateway endpoint URI]
 export ENTTOI_CLIENT_TOKEN=[client's token]

@@ -24,10 +24,12 @@ DAEMON_USER=root
 PIDFILE=/var/run/$DAEMON_NAME.pid
 
 . /lib/lsb/init-functions
+. /etc/environment
 
 do_start () {
     log_daemon_msg "Starting system $DAEMON_NAME daemon"
     start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --user $DAEMON_USER --chuid $DAEMON_USER --startas $DAEMON -- $DAEMON_OPTS
+    log_success_msg
     log_end_msg $?
 }
 do_stop () {
