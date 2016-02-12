@@ -11,7 +11,7 @@
 ### END INIT INFO
 
 DIR=/home/pi/enttoi-client
-DAEMON=$DIR/enttoiservice.py
+DAEMON=$DIR/service.py
 DAEMON_NAME=enttoiservice
 
 # line options for daemon here
