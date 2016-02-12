@@ -11,8 +11,8 @@
 ### END INIT INFO
 
 DIR=/home/pi/enttoi-client
-DAEMON=$DIR/service.py
-DAEMON_NAME=enttoi-client
+DAEMON=$DIR/enttoiservice.py
+DAEMON_NAME=enttoiservice
 
 # line options for daemon here
 DAEMON_OPTS=""
@@ -27,9 +27,7 @@ PIDFILE=/var/run/$DAEMON_NAME.pid
 
 do_start () {
     log_daemon_msg "Starting system $DAEMON_NAME daemon"
-	git reset --hard
-	git pull
-    start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --user $DAEMON_USER --chuid $DAEMON_USER --startas $DAEMON -- $DAEMON_OPTS
+	start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --user $DAEMON_USER --chuid $DAEMON_USER --startas $DAEMON -- $DAEMON_OPTS
     log_end_msg $?
 }
 do_stop () {
