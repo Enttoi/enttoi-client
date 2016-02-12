@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """Main entry point to application when running client from daemon"""
 
-import logging, logging.handlers, argparse, sys
+import logging, logging.handlers, argparse, sys, signal
+import client
 
 # Deafults
 LOG_FILENAME = "/tmp/entoi-client.log"
@@ -40,16 +41,34 @@ class EnttoiLogger(object):
 		if message.rstrip() != "":
 			self.logger.log(self.level, message.rstrip())
 
-# Replace stdout with logging to file at INFO level
+# Replace stdout with logging to file at INFO and ERROR level
 sys.stdout = EnttoiLogger(logger, logging.INFO)
-# Replace stderr with logging to file at ERROR level
 sys.stderr = EnttoiLogger(logger, logging.ERROR)
 
-# Loop forever, doing something useful hopefully:
-# while True:
-#         logger.info("The counter is now " + str(i))
-#         print "This is a print"
-#         i += 1
-#         time.sleep(5)
-#         if i == 3:
-#                 j = 1/0  # cause an exception to be thrown and the program to exit
+# get configuration of gateway
+end_point = ""
+client_token = ""
+
+if os.environ.has_key("ENTTOI_ENDPOINT"):
+	end_point = os.environ["ENTTOI_ENDPOINT"]
+
+if os.environ.has_key("ENTTOI_CLIENT_TOKEN"):
+	client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
+	
+if not end_point or not client_token:
+	print("Endpoint or/and client token not specified")
+	sys.exit(1)
+
+# start client and handle stop
+c = client.Client(end_point, client_token)
+c.start()
+		
+def signal_term_handler(signal, frame):
+	c.stop()
+	sys.exit(0)
+	
+signal.signal(signal.SIGTERM, signal_term_handler)
+
+# block main thread 
+while True:
+	time.sleep(1)
