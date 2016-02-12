@@ -8,7 +8,9 @@ For each sensor a separated thread is spinned, so the IO operations won't block 
 
 ## Configurations
 
-The only prerequisite is to have environment variables which defines the endpoint of API and a security token. Those can be defined either simply in `/etc/environment`:
+The only prerequisite is to have environment variables which defines the endpoint of API and a security token. 
+
+Those can be defined either simply in `/etc/environment`:
 ```bash
 ENTTOI_ENDPOINT="[gateway endpoint URI]"
 ENTTOI_CLIENT_TOKEN="[client's token]"

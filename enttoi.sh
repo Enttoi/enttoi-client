@@ -28,7 +28,11 @@ PIDFILE=/var/run/$DAEMON_NAME.pid
 
 do_start () {
     log_daemon_msg "Starting system $DAEMON_NAME daemon"
-    cd $DIR && git reset --hard && git pull -f && cd -
+    # currently the ugly but working way to update the client on start
+    cd $DIR && git reset --hard &> /dev/null 
+    log_progress_msg "update check"
+    git pull -f &> /dev/null && chmod 755 service.py && cd - > /dev/null
+    log_progress_msg "starting client"
     start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --user $DAEMON_USER --chuid $DAEMON_USER --startas $DAEMON -- $DAEMON_OPTS
     log_end_msg $?
 }
