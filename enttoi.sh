@@ -26,13 +26,24 @@ PIDFILE=/var/run/$DAEMON_NAME.pid
 . /etc/environment
 DAEMON_OPTS="-e $ENTTOI_ENDPOINT -t $ENTTOI_CLIENT_TOKEN"
 
+# currently the ugly but working way to update the client on start
+update_client() {
+    cd $DIR 
+    {
+        git reset --hard > /dev/null
+        git pull -f > /dev/null 
+        chmod 755 $DAEMON 
+        log_progress_msg ":)"
+    } ||
+    {
+        log_progress_msg ":("
+    }
+    cd - > /dev/null
+}
+
 do_start () {
     log_daemon_msg "Starting system $DAEMON_NAME daemon"
-    # currently the ugly but working way to update the client on start
-    cd $DIR && git reset --hard > /dev/null 
-    log_progress_msg "."
-    git pull -f > /dev/null && chmod 755 service.py && cd - > /dev/null
-    log_progress_msg "."
+    update_client
     start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --user $DAEMON_USER --chuid $DAEMON_USER --startas $DAEMON -- $DAEMON_OPTS
     log_progress_msg "done"
 	log_end_msg $?
