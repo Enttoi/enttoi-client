@@ -29,9 +29,9 @@ DAEMON_OPTS="-e $ENTTOI_ENDPOINT -t $ENTTOI_CLIENT_TOKEN"
 do_start () {
     log_daemon_msg "Starting system $DAEMON_NAME daemon"
     # currently the ugly but working way to update the client on start
-    cd $DIR && git reset --hard &> /dev/null 
+    cd $DIR && git reset --hard > /dev/null 
     log_progress_msg "."
-    git pull -f &> /dev/null && chmod 755 service.py && cd - > /dev/null
+    git pull -f > /dev/null && chmod 755 service.py && cd - > /dev/null
     log_progress_msg "."
     start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --user $DAEMON_USER --chuid $DAEMON_USER --startas $DAEMON -- $DAEMON_OPTS
     log_progress_msg "done"
