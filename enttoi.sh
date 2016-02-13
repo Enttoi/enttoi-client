@@ -14,9 +14,6 @@ DIR=/home/pi/enttoi-client
 DAEMON=$DIR/service.py
 DAEMON_NAME=enttoiservice
 
-# line options for daemon here
-DAEMON_OPTS=""
-
 # determines what user the script runs as
 DAEMON_USER=root
 
@@ -24,17 +21,21 @@ DAEMON_USER=root
 PIDFILE=/var/run/$DAEMON_NAME.pid
 
 . /lib/lsb/init-functions
+
+# pass gateway configurations to clien
 . /etc/environment
+DAEMON_OPTS="-e $ENTTOI_ENDPOINT -t $ENTTOI_CLIENT_TOKEN"
 
 do_start () {
     log_daemon_msg "Starting system $DAEMON_NAME daemon"
     # currently the ugly but working way to update the client on start
     cd $DIR && git reset --hard &> /dev/null 
-    log_progress_msg "update check"
+    log_progress_msg "."
     git pull -f &> /dev/null && chmod 755 service.py && cd - > /dev/null
-    log_progress_msg "starting client"
+    log_progress_msg "."
     start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --user $DAEMON_USER --chuid $DAEMON_USER --startas $DAEMON -- $DAEMON_OPTS
-    log_end_msg $?
+    log_progress_msg "done"
+	log_end_msg $?
 }
 do_stop () {
     log_daemon_msg "Stopping system $DAEMON_NAME daemon"

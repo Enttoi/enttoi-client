@@ -5,6 +5,7 @@ import logging
 import logging.handlers
 import sys
 import signal
+import argparse
 import time
 import os
 import client
@@ -41,15 +42,17 @@ class EnttoiLogger(object):
 sys.stdout = EnttoiLogger(logger, logging.INFO)
 sys.stderr = EnttoiLogger(logger, logging.ERROR)
 
-# get configuration of gateway
+# get configuration of gateway from passed arguments
+parser = argparse.ArgumentParser(description="Enttoi service")
+parser.add_argument("-e", "--endpoint", help="gateway API endpoint address")
+parser.add_argument("-t", "--token", help="authorization token to gateway")
+args = parser.parse_args()
 end_point = ""
 client_token = ""
-
-if os.environ.has_key("ENTTOI_ENDPOINT"):
-	end_point = os.environ["ENTTOI_ENDPOINT"]
-
-if os.environ.has_key("ENTTOI_CLIENT_TOKEN"):
-	client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
+if args.endpoint:
+	end_point = args.endpoint
+if args.token:
+	client_token = args.token
 	
 if not end_point or not client_token:
 	print("Endpoint or/and client token not specified")

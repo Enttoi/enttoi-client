@@ -16,26 +16,6 @@ ENTTOI_ENDPOINT="[gateway endpoint URI]"
 ENTTOI_CLIENT_TOKEN="[client's token]"
 ```
 
- or for the user:
-```bash
-export ENTTOI_ENDPOINT=[gateway endpoint URI]
-export ENTTOI_CLIENT_TOKEN=[client's token]
-```
-
-Persist them, by adding those lines into
-```bash
-vi ~/.bash_profile
-```
-
-Since GPIO requires elevations, environment variables needs to be added for sudo 
-```bash
-sudo visudo
-```
-then add:
-```bash
-Defaults	env_keep +="ENTTOI_ENDPOINT ENTTOI_CLIENT_TOKEN"
-```
-
 ## Running as shell application
 
 Deploy the `/` folder into Raspberry Pi and start client from terminal:
