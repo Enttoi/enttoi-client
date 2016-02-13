@@ -18,6 +18,16 @@ ENTTOI_CLIENT_TOKEN="[client's token]"
 
 ## Running as shell application
 
+Since GPIO requires elevations, environment variables needs to be added for sudo 
+```bash
+sudo visudo
+```
+then add:
+```bash
+Defaults	env_keep +="ENTTOI_ENDPOINT"
+Defaults	env_keep +="ENTTOI_CLIENT_TOKEN"
+```
+
 Deploy the `/` folder into Raspberry Pi and start client from terminal:
 ```bash
 sudo python app.py
