@@ -10,7 +10,7 @@ import input, output
 import RPi.GPIO as GPIO
 import datetime, threading, requests
 
-CONST_API_TIMEOUT = 3 # after X seconds to timout when calling API
+CONST_API_TIMEOUT = 5 # after X seconds to timout when calling API
 CONST_API_INVOKE_LIMIT = 30 # send updates no more than once in X seconds
 CONST_SENSOR_READ_FREQUENCY = 0.2 # cool down between IO reads
 
@@ -41,7 +41,7 @@ class Client(object):
 		
 	# starts client - spins up thread for each sensor and sends data to API 
 	def start(self):
-		print("Starting client with endpoint [{0}]".format(self.__end_point))	
+		print("Starting client [{0}][{1}]".format(CONST_API_TIMEOUT, self.__end_point))	
 		self.__power_indicator.on()		
 		
 		self.__stop_event = threading.Event()	
