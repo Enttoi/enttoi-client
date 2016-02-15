@@ -20,22 +20,28 @@ class Led(object):
 	def off(self):
 		self.__ensure_not_blinking()
 		GPIO.output(self.pin,False)
+		
+	def blink_fast(self):
+		self.blink(0.07)
 
-	def blink(self):
+	def blink_slow(self):
+		self.blink(0.3)
+		
+	def blink(self, frequency):
 		self.__ensure_not_blinking()
 		self.__stop_blink_event = threading.Event()	
-		self.__thread = threading.Thread(target=self.__do_blinking)
+		self.__thread = threading.Thread(target=self.__do_blinking, args = (frequency,))
 		self.__thread.daemon = True
 		self.__thread.start()
-		
-	def __do_blinking(self):
+	
+	def __do_blinking(self, frequency):
 		state = False;
 		GPIO.output(self.pin, state)
 	
 		while (not self.__stop_blink_event.is_set()):
-			state = not state					
+			state = not state
 			GPIO.output(self.pin,state)
-			self.__stop_blink_event.wait(CONST_BLINK_FREQUENCY)
+			self.__stop_blink_event.wait(frequency)
 			
 	def __ensure_not_blinking(self):
 		try:

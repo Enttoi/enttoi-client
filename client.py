@@ -42,7 +42,7 @@ class Client(object):
 	# starts client - spins up thread for each sensor and sends data to API 
 	def start(self):
 		print("Starting client [{0}][{1}]".format(CONST_API_TIMEOUT, self.__end_point))	
-		self.__power_indicator.blink()	# indicates no successful post to gateway was done
+		self.__power_indicator.on()	# indicates no successful post to gateway was done
 		
 		self.__stop_event = threading.Event()	
 		self.__threads = []
@@ -85,11 +85,11 @@ class Client(object):
 				success = self.__post_to_gateway(door.serialize_state())
 				if(success):
 					last_request = now
-					self.__power_indicator.on() # indicates success
+					self.__power_indicator.blink_slow() # indicates success
 				else:
 					# force sending current (recently changed) state on next iteration
 					last_request = now - self.__throttling_factor
-					self.__power_indicator.blink() # indicates error in progress
+					self.__power_indicator.blink_fast() # indicates error in progress
 					
 			self.__stop_event.wait(CONST_SENSOR_READ_FREQUENCY)	
 		
