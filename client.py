@@ -2,7 +2,7 @@
 Singleton for performing all workload of the client
 Is initiated from environment - either app.py which executed 
 from shell or from daemon service. Once an instance created,
-stop() method needs to be called to start the actual monitoring
+start() method needs to be called to start the actual monitoring
 and then later on stop() to halt.
 """
 
@@ -57,7 +57,7 @@ class Client(object):
 	def stop(self):		
 		try:
 			self.__stop_event
-		except NameError:
+		except (NameError, AttributeError):
 			print "Client is not running"
 		else:
 			print("Stopping client...")
