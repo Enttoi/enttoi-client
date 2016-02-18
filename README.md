@@ -1,5 +1,10 @@
 # Enttoi Raspberry Pi client
 
+|Branch|Travis|
+|------|:------:|
+|master|[![Build Status](https://img.shields.io/travis/Enttoi/enttoi-client/master.svg)](https://travis-ci.org/Enttoi/enttoi-client)|
+|dev   |[![Build Status](https://img.shields.io/travis/Enttoi/enttoi-client/dev.svg)](https://travis-ci.org/Enttoi/enttoi-client)|
+
 This is a client application that runs on RPi and streams sensors data to [gateway](https://github.com/Enttoi/enttoi-gateway).
 
 The client will read each sensor's state every `X` ms. After reading, it will report on each change of state immediately or at least once every `Y` seconds (even if the state wasn't changed) to the gateway. This will provide an efficient way of getting real-time state of sensors and track of online/offline clients (due to network or other issues). 
