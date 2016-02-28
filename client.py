@@ -58,7 +58,7 @@ class Client(object):
 		try:
 			self.__stop_event
 		except (NameError, AttributeError):
-			print "Client is not running"
+			print("Client is not running")
 		else:
 			print("Stopping client...")
 			# signal to all threads to stop working
