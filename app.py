@@ -1,33 +1,39 @@
-"""Main entry point to application when running client from shell"""
+"""
+Main entry point to application when running client from shell
+"""
 
-import os, sys, client
+import os
+import sys
+import client
 
-def main(argv):
-	end_point = ""
-	client_token = ""
-	
-	if os.environ.has_key("ENTTOI_ENDPOINT"):
-		end_point = os.environ["ENTTOI_ENDPOINT"]
-	
-	if os.environ.has_key("ENTTOI_CLIENT_TOKEN"):
-		client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
-		
-	if not end_point or not client_token:
-		print("Endpoint or/and client token not specified")
-		sys.exit(1)
-		
-	c = client.Client(end_point, client_token)
-	print("Hit 'Enter' or 'Ctr+C' to exit...\n")
-	
-	c.start()
-	try:
-		# block main thread
-		raw_input("")	
-	except KeyboardInterrupt:
-		pass
-		
-	c.stop()
-	
+def main():
+    """main entry point to application"""
+
+    end_point = ""
+    client_token = ""
+
+    if "ENTTOI_ENDPOINT" in os.environ:
+        end_point = os.environ["ENTTOI_ENDPOINT"]
+
+    if "ENTTOI_CLIENT_TOKEN" in os.environ:
+        client_token = os.environ["ENTTOI_CLIENT_TOKEN"]
+
+    if not end_point or not client_token:
+        print("Endpoint or/and client token not specified")
+        sys.exit(1)
+
+    clnt = client.Client(end_point, client_token)
+    print("Hit 'Enter' or 'Ctr+C' to exit...\n")
+
+    clnt.start()
+    try:
+        # block main thread
+        input("")
+    except KeyboardInterrupt:
+        pass
+
+    clnt.stop()
+
 if __name__ == "__main__":
-	main(sys.argv[1:])
-	sys.exit(0)
+    main()
+    sys.exit(0)

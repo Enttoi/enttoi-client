@@ -4,3 +4,6 @@ python:
 install:
   - pip install rpi.gpio
   - pip install requests
+  
+script: 
+  - pylint gpio_input gpio_output client app service
