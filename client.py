@@ -4,7 +4,7 @@ Is initiated from environment - either app.py which executed from shell or from 
 Once an instance created, start() method needs to be called to start the actual monitoring
 and then later on stop() to halt.
 """
-
+from __future__ import print_function
 import datetime
 import threading
 import requests

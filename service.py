@@ -2,6 +2,7 @@
 # pylint: disable=R0903, W0621, W0613
 """Main entry point to application when running client from daemon"""
 
+from __future__ import print_function
 import logging
 import logging.handlers
 import sys

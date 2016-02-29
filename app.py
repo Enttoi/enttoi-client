@@ -1,7 +1,7 @@
 """
 Main entry point to application when running client from shell
 """
-
+from __future__ import print_function
 import os
 import sys
 import client
