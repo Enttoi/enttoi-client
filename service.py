@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# pylint: disable=R0903, W0621, W0613
 """Main entry point to application when running client from daemon"""
 
 import logging

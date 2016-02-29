@@ -44,15 +44,15 @@ class Client(object):
         # wPi = 0
         self.__power_indicator = gpio_output.Led(17)
 
+        self.__stop_event = threading.Event()
+        self.__threads = []
+
     def start(self):
         """starts client - spins up thread for each sensor and sends data to API"""
 
         print("Starting client [{0}][{1}]".format(
             CONST_API_TIMEOUT, self.__end_point))
-        self.__power_indicator.on()  # indicates no successful post to gateway was done
-
-        self.__stop_event = threading.Event()
-        self.__threads = []
+        self.__power_indicator.turn_on()  # indicates no successful post to gateway was done
 
         for door in self.__doors:
             thread = threading.Thread(
@@ -77,7 +77,7 @@ class Client(object):
             for thread in self.__threads:
                 thread.join()
 
-            self.__power_indicator.off()
+            self.__power_indicator.turn_off()
             print("Client stopped")
 
     def __process_sensor(self, door):

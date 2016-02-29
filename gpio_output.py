@@ -6,20 +6,23 @@ import RPi.GPIO as GPIO
 
 
 class Led(object):
+    """Represent LED as output"""
 
     def __init__(self, pin):
         self.pin = pin
         GPIO.setup(self.pin, GPIO.OUT)
         self.__blinking_frequency = -1  # indicates no blinking
-        self.off()  # reset state
+        self.__stop_blink_event = None
+        self.__thread = None
+        self.turn_off()  # reset state
 
-    def on(self):
+    def turn_on(self):
         """turnes LED on"""
 
         self.__ensure_not_blinking()
         GPIO.output(self.pin, True)
 
-    def off(self):
+    def turn_off(self):
         """turnes LED off"""
 
         self.__ensure_not_blinking()
