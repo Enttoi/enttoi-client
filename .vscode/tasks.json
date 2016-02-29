@@ -5,5 +5,7 @@
     "windows": {
         "command": "python.exe"
     },
-    "args": ["${file}"]
+    "args": [
+        "${file}"
+    ]
 }
