@@ -2,8 +2,8 @@
 
 |Branch|Travis|
 |------|:------:|
-|master|[![Build Status](https://img.shields.io/travis/Enttoi/enttoi-client-rpi/master.svg)](https://travis-ci.org/Enttoi/enttoi-client)|
-|dev   |[![Build Status](https://img.shields.io/travis/Enttoi/enttoi-client-rpi/dev.svg)](https://travis-ci.org/Enttoi/enttoi-client)|
+|master|[![Build Status](https://img.shields.io/travis/Enttoi/enttoi-client-rpi/master.svg)](https://travis-ci.org/Enttoi/enttoi-client-rpi)|
+|dev   |[![Build Status](https://img.shields.io/travis/Enttoi/enttoi-client-rpi/dev.svg)](https://travis-ci.org/Enttoi/enttoi-client-rpi)|
 
 This is a client application that runs on RPi and streams sensors data to [gateway](https://github.com/Enttoi/enttoi-gateway).
 
