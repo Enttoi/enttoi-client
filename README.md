@@ -25,6 +25,9 @@ The following parts required:
   * Off - client terminated
 * 2 [reed switches](http://www.aliexpress.com/item//32424305003.html) connected to wPi=5,7 or BCM=4,24. 
 
+All parts should be connected in the following way:
+![Schematic](docs/schematic.png)
+
 ## Application Configurations
 
 The only prerequisite is to have environment variables which defines the endpoint of API and a security token. 
