@@ -11,7 +11,21 @@ The client will read each sensor's state every `X` ms. After reading, it will re
 
 For each sensor a separated thread is spinned, so the IO operations won't block reporting of different sensors.
 
-## Configurations
+## Board schematic
+
+The following parts required:
+* Raspberry Pi board 
+* [WiFi dongle](http://www.aliexpress.com/item/150M-USB-Wifi-Micro-Adapter-Dongle-802-11n-Plug-and-Play-for-Raspberry-Pi/32302705541.html) (optional if there is LAN socket)
+* If the WiFi dongle used **at least 2A** power adapter **is required**.
+* Breadboard (optional)
+* One [LED](http://www.aliexpress.com/item//32377761083.html) connected to wPi=0 or BCM=17 pin. The LED has 4 states:
+  * On - client launched, but no request is sent to gateway
+  * Slow blinking - latest request were successfull
+  * Fast blinking - latest request wasn't sent due error (timeout, network errors, etc)
+  * Off - client terminated
+* 2 [reed switches](http://www.aliexpress.com/item//32424305003.html) connected to wPi=5,7 or BCM=4,24. 
+
+## Application Configurations
 
 The only prerequisite is to have environment variables which defines the endpoint of API and a security token. 
 
@@ -68,13 +82,3 @@ Now, add it to boot sequence:
 ```bash
 sudo update-rc.d enttoi.sh defaults
 ```
-
-## Sensors setup
-
-The current setup is:
-* One [LED](http://www.aliexpress.com/item//32377761083.html) connected to wPi=0 or BCM=17 pin. The LED has 4 states:
-  * On - client launched, but no request is sent to gateway
-  * Slow blinking - latest request were successfull
-  * Fast blinking - latest request wasn't sent due error (timeout, network errors, etc)
-  * Off - client terminated
-* 2 [reed switches](http://www.aliexpress.com/item//32424305003.html) connected to wPi=5,7 or BCM=4,24. 
