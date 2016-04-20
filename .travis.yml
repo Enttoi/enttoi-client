@@ -8,3 +8,6 @@ install:
   
 script: 
   - pylint gpio_input gpio_output client app service
+  
+notifications:
+  slack: $SLACK_TOKEN
